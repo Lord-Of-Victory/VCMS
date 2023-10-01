@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Mark Attendance</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+	<div class="container">
+		<h1>Mark Attendance for {{ course.name }}</h1>
+		<form method="post">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Attendance</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for user in users %}
+					{% if user.roles=='student' %}
+					<tr>
+						<td>{{ user.username }}</td>
+						<td>
+							<div class="form-check">
+								<input class="form-check-input" type="radio" name="{{ user.id }}" value="present">
+								<label class="form-check-label">Present</label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="radio" name="{{ user.id }}" value="absent">
+								<label class="form-check-label">Absent</label>
+							</div>
+						</td>
+					</tr>
+					{% endif %}
+					{% endfor %}
+				</tbody>
+			</table>
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</form>
+	</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

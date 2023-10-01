@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}
+Virtual Classroom Management System - {{ assignments.name }}
+{% endblock %}
+
+{% block content %}
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='dashboard_style.css')}}">
+</head>
+
+<main class="container py-5">
+    <div class="row">
+        <div class="col-md-8">
+            <h1 class="text-gradient">{{ assignments.title }}</h1>
+            {% if assignments.description %}
+            <p>{{ assignments.description }}</p>
+            {% endif %}
+            <hr>
+            <h5>Due Date : <strong style="color: red;">{{assignments.due_date}}</strong></h5>
+        </div>
+        <div class="col-md-4">
+            <table class="table">
+                <tbody>
+                    <h4>Course Details:</h4>
+                    <tr>
+                        <td>Course Name: </td>
+                        <td><strong>{{ course.name }}</strong></td>
+                    <tr>
+                        <td>Course Description: </td>
+                        <td style=" word-wrap: break-word;">{{ course.description }}</td>
+                    </tr>
+                    <tr>
+                        <td>Course Start Date :</td>
+                        <td><strong>{{ course.start_date.strftime('%Y-%m-%d') }}</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Course End Date: </td>
+                        <td><strong style="color: rgb(255, 61, 61);">{{ course.end_date.strftime('%Y-%m-%d') }}</strong>
+                        </td>
+                    </tr>
+                    </tr>
+                </tbody>
+            </table>
+            {% if session['is_admin'] %}
+            <a class="btn btn-primary" href="{{url_for('delete',assignment_id=assignments.id)}}"
+                style="width: 100%;">Delete Assignment</a>
+            {%endif%}
+        </div>
+    </div>
+</main>
+
+{% endblock %}

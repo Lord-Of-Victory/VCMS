@@ -1,0 +1,44 @@
+* {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
+.btn-light:hover {
+    background-color: gainsboro;
+}
+
+.creator {
+    background: linear-gradient(to right, #ffa600 0%, #dd4c4f 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+.text-gradient {
+    background: linear-gradient(to right, #ffa600 0%, #dd4c4f 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+/* Works on Firefox */
+* {
+    scrollbar-width:none;
+    scrollbar-color: #ffae00 #dd4c4f;
+  }
+  
+  /* Works on Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  *::-webkit-scrollbar-track {
+    background: #dd4c4f;
+  }
+  
+  *::-webkit-scrollbar-thumb {
+    background-color: #ffae00;
+    border-radius: 3px;
+    border: 1px solid #dd4c4f;
+  }

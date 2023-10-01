@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}
+Virtual Classroom Management System - All Courses
+{% endblock %}
+
+{% block content %}
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='dashboard_style.css')}}">
+</head>
+
+<body>
+    {% if error %}
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <strong>{{ error }}</strong>
+    </div>
+    {% endif %}
+    <main class="container py-5">
+        <div class="row">
+            <div class="col-md">
+                <h2 class="mt-5 text-gradient">All Courses</h2>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">
+                                <h5><strong>Course Name</strong></h5>
+                            </th>
+                            <th scope="col">
+                                <h5><strong>Description</strong></h5>
+                            </th>
+                            <th scope="col">
+                                <h5><strong>Start Date</strong></h5>
+                            </th>
+                            <th scope="col">
+                                <h5><strong>End Date</strong></h5>
+                            </th>
+                            <th scope="col">
+                                <h5><strong>Enroll Status</strong></h5>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for course in courses %}
+                        <tr>
+                            <td><strong>{{ course.name }}</strong></td>
+                            <td style=" word-wrap: break-word;">{{ course.description }}</td>
+                            <td>{{ course.start_date.strftime('%Y-%m-%d') }}</td>
+                            <td>{{ course.end_date.strftime('%Y-%m-%d') }}</td>
+                            {% if course.id in course_enrolled %}
+                            <td><a style="  width: 100%;" class="btn btn-secondary disabled">Already Enrolled</a></td>
+                            {%else%}
+                            <td><a style="  width: 100%;" class="btn btn-primary"
+                                    href="{{ url_for('enroll_in_course',course_id=course.id) }}">Enroll</a></td>
+                            {%endif%}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% if user.roles=='teacher' %}
+        <div>
+            <center>
+                <a class="btn btn-primary" href="{{ url_for('new_course') }}">Add New Course</a>
+            </center>
+        </div>
+        {% endif %}
+    </main>
+    {% endblock %}

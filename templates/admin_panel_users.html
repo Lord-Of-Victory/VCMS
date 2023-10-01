@@ -1,0 +1,76 @@
+<main class="container py-5">
+    <div class="row">
+        <div class="col-md">
+            <h2 class="mt-5 text-gradient">All {{role}}</h2>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            <h5><strong>User ID</strong></h5>
+                        </th>
+                        <th scope="col">
+                            <h5><strong>Username</strong></h5>
+                        </th>
+                        <th scope="col">
+                            {%if role == 'Users'%}
+                            <h5><strong>User Role</strong></h5>
+                            {%elif role == 'Students'%}
+                            <h5><strong>Courses Enrolled</strong></h5>
+                            {%elif role == 'Teachers'%}
+                            <h5><strong>Courses Instructing</strong></h5>
+                            {%endif%}
+                        </th>
+                        <th scope="col">
+                            {%if role != 'Students'%}
+                            <h5><strong>Admin Status</strong></h5>
+                        </th>
+                        <th scope="col">
+                            <h5><strong>Promote to Admin</strong></h5>
+                        </th>
+                        {% endif %}
+                        <th scope="col">
+                            <h5><strong>Action</strong></h5>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td><strong>{{ user.username }}</strong></td>
+                        {%if role == 'Users'%}
+                        <td style="text-transform: capitalize;">{{ user.roles }}</td>
+                        <td> <strong>{{ user.is_admin }}</strong></td>
+                        {%elif role=='Students'%}
+                        <td id="{{user.id}}_course_enrollment"><button class="btn" onclick ="fetch_user_courses(parseInt( '{{user.id}}'))">Show Courses ID</button></td>
+                        {%elif role=='Teachers'%}
+                        <td id="{{user.id}}_course_instructors"><button class="btn" onclick ="fetch_user_courses_inst(parseInt( '{{user.id}}'))">Show Courses ID</button></td>
+                        <td> <strong>{{ user.is_admin }}</strong></td>
+                        {%endif%}
+                        {% if session['is_admin'] %}
+                        {% if user.is_admin %}
+                        <td><a style="  width: 100%;" class="btn btn-primary disabled">Already Admin</a></td>
+                        {%else%}
+                        {%if user.roles != 'student'%}
+                        <td><a style="  width: 100%;" class="btn btn-primary"
+                                href="{{ url_for('user_to_admin',user_id=user.id) }}">Promote</a></td>
+                        {% else %}
+                        <td></td>
+                        <!-- {%if role == 'Students'%}
+                        <td></td>
+                        {%endif%} -->
+                        {%endif%}
+                        {%endif%}
+                        <td id="user_object_{{user.id}}"><a class="btn btn-primary"
+                                onclick="fetch_user_edit(parseInt('{{user.id}}'))"
+                                style="margin-right: 2px;  width: 45%;">Edit</a><a style="  width: 45%;"
+                                class="btn btn-primary" style="padding-right: 2px; background-color: red;"
+                                href="{{ url_for('delete',user_id=user.id) }}">Delete</a></td>
+                        {%endif%}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>

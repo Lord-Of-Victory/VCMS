@@ -1,0 +1,46 @@
+/* Body Styles */
+body {
+    background-color: #F5F5F5;
+    font-family: Arial, sans-serif;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+a {
+    color: #000000;
+    text-decoration: none;
+}
+
+
+a:hover{
+    background: linear-gradient(to right, #ff8a00 0%, #dd4c4f 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.btn {
+    background: linear-gradient(to right, #ff8a00 0%, #dd4c4f 100%);
+    border-radius: 5px;
+    border-width: 1px;
+    border-color: #ff8a00;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn:hover{
+    background-color: gainsboro;
+    border-color: #ff8a00;
+    border-width: 1px;
+}

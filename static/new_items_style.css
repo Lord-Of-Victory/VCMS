@@ -1,0 +1,20 @@
+/* Body Styles */
+body {
+    background-color: #F5F5F5;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px #dcdcdc;
+    margin-top: 5%;
+    max-width: 70vb;
+    padding: 40px;
+    text-align: center;
+  }
+ 
+  .form-group {
+    margin-bottom: 20px;
+  }
+

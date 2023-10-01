@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block title %}
+Virtual Classroom Management System - {{ topic.name }}
+{% endblock %}
+
+{% block content %}
+
+<head>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='dashboard_style.css')}}">
+</head>
+
+<main class="container py-5">
+  <div class="row">
+    <div class="col-md-8">
+      <h1 class="text-gradient">{{ topic.name }}</h1>
+      {% if topic.description %}
+      <p>{{ topic.description }}</p>
+      {% endif %}
+      <hr>
+      {% if topic.messages%}
+      <h2>Messages</h2>
+      <ul class="list-group my-4" style="height: 40vh; max-height: 45vh; overflow-y:auto;">
+        {% for message in topic.messages %}
+        {%if message %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <div class="limited-text-wrapper">
+            <p class="limited-text">{{ message.text }}</p>
+          </div>
+          <div class="limited-text-wrapper">
+            <strong><i id="creator_id">- Created By : <i class="creator">{{message.creator.username}}</i></i></strong>
+          </div>
+          <div class="limited-text-wrapper">
+            <a class="dropdown-toggle" href="#" id="Three_Dot_Dropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+            </a>
+            <ul class="dropdown-menu dropdown-menu-sm" aria-labelledby="Three_Dot_Dropdown">
+              <center>
+                <a href="{{url_for('delete',message_id=message.id)}}"><small class="dropdown-item-sm">Delete</small></a>
+              </center>
+            </ul>
+          </div>
+        </li>
+        {%endif%}
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p align="center" style="color: grey;">No Messages To Show</p>
+      {% endif %}
+      <hr>
+      <a href="{{ url_for('new_message', course_id=course_id, topic_id=topic.id) }}" class="btn btn-primary">New
+        Message</a>
+    </div>
+    <div class="col-md-4 overflow-auto">
+      <h2 class="m-3">Uploads</h2>
+      <hr>
+      {% if topic.uploads%}
+      <ul class="list-group rounded rounded-2 my-4" style="max-height: 52vh; overflow-y:auto;">
+        {% for upload in topic.uploads %}
+        {%if upload %}
+        {% set media_type=upload.link_to_file.split('.').pop() %}
+        {% if media_type=='mp4'%}
+        <li class="list-group-item">
+          <div class="ratio ratio-16x9">
+            <iframe class="p-3 img-fluid" src="{{url_for('static',filename=upload.link_to_file)}}" alt=""></iframe>
+          </div>
+          <div class="limited-text-wrapper">
+            <a class="dropdown-toggle" href="#" id="Three_Dot_Dropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+            </a>
+            <ul class="dropdown-menu dropdown-menu-sm" aria-labelledby="Three_Dot_Dropdown">
+              <center>
+                <a href="{{url_for('delete',upload_id=upload.id)}}"><small class="dropdown-item-sm">Delete</small></a>
+              </center>
+            </ul>
+          </div>
+        </li>
+        {%endif%}
+        {% if media_type=='jpg'%}
+        <li class="list-group-item">
+          <div>
+            <image class="p-3 rounded rounded-2 img-fluid" src="{{url_for('static',filename=upload.link_to_file)}}"
+              alt="">
+          </div>
+          <div class="limited-text-wrapper">
+            <a class="dropdown-toggle" href="#" id="Three_Dot_Dropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+            </a>
+            <ul class="dropdown-menu dropdown-menu-sm" aria-labelledby="Three_Dot_Dropdown">
+              <center>
+                <a href="{{url_for('delete',upload_id=upload.id)}}"><small class="dropdown-item-sm">Delete</small></a>
+              </center>
+            </ul>
+          </div>
+        </li>
+        {%endif%}
+        {%endif%}
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p align="center" style="color: grey;">No Uploads To Show</p>
+      {% endif %}
+      <hr>
+      <a align="center" style="width: 100%;" href="{{ url_for('upload', course_id=course_id, topic_id=topic.id) }}"
+        class="btn btn-primary">New
+        Upload</a>
+    </div>
+  </div>
+</main>
+
+{% endblock %}

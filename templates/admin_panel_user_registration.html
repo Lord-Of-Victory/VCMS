@@ -1,0 +1,94 @@
+<div class="container">
+	<form method="POST" action="{{ url_for('admin_user_register') }}" id="register_form">
+		<h2>REGISTER</h2>
+		{% if errors %}
+		<div class="error">
+			{% for error in errors %}
+			<div class="alert alert-danger" role="alert">
+				{{error}}
+			</div>
+			{% endfor %}
+		</div>
+		{% endif %}
+		<ul class="error" role="alert" style="color: red;"></ul>
+		<div class="form-group m-2">
+			<input type="text" id="username" name="username" class="form-control" placeholder="Username" required>
+			<div class="invalid-feedback">Username must be at least 6 characters long.</div>
+		</div>
+		<div class="form-group m-2">
+			<input type="email" id="email" name="email" class="form-control" placeholder="Email" required>
+			<div class="invalid-feedback">Please enter a valid email address.</div>
+		</div>
+		<div class="form-group m-2">
+			<input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+			<div class="invalid-feedback">Password must be at least 8 characters long.</div>
+		</div>
+		<div class="form-group m-2">
+			<input type="password" id="confirm_password" name="confirm_password" class="form-control"
+				placeholder="Confirm Password" required>
+			<div class="invalid-feedback">Passwords do not match.</div>
+		</div>
+		<div class="form-group m-2">
+			<label for="role"><strong>Role:</strong></label>
+			<input type="radio" id="s-role" name="role" value="student" required>
+			<label for="s-role">Student</label>
+			<input type="radio" id="t-role" name="role" value="teacher" required>
+			<label for="t-role">Teacher</label>
+		</div>
+		<div class="form-group m-2">
+			<button type="submit" class="btn btn-light form_btn" id="submit-btn">Register</button>
+		</div>
+		
+	</form>
+</div>
+
+<script>
+	// get form element and add submit event listener
+	const form = document.querySelector('#register_form');
+	form.addEventListener('submit', function (event) {
+		// prevent form submission
+		event.preventDefault();
+
+		// get form inputs
+		const username = document.querySelector('#username');
+		const email = document.querySelector('#email');
+		const password = document.querySelector('#password');
+		const confirmPassword = document.querySelector('#confirm_password');
+		const role = document.querySelector('input[name="role"]:checked');
+
+		// validate inputs
+		const errors = [];
+		if (username.value.length < 6 || username.value.length > 20){
+			errors.push('Username must be between 6 and 20 characters');
+		}
+		if ((username.value.string.trim().length<6) || username.value.includes(' ')){
+			errors.push('Username should NOT contain SPACES');
+		}
+		if (!email.value.includes('@') || !email.value.includes('.')) {
+			errors.push('Email must be a valid email address');
+		}
+		if ((password.value.length < 8) || (password.value.string.trim().length<6) || (password.value.includes(' '))) {
+			errors.push('Password must be at least 8 characters');
+		}
+		if (password.value !== confirmPassword.value) {
+			errors.push('Passwords do not match');
+		}
+		if (!role) {
+			errors.push('Please select a role');
+		}
+
+		// display errors or submit form
+		const errorDiv = document.querySelector('.error');
+		if (errors.length > 0) {
+			errorDiv.innerHTML = '';
+			errors.forEach(function (error) {
+				const errorP = document.createElement('li');
+				errorP.innerText = error;
+				errorDiv.appendChild(errorP);
+			});
+		} else {
+			form.submit();
+		}
+	});
+
+</script>

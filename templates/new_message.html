@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}
+Virtual Classroom Management System - New Message
+{% endblock %}
+
+{% block content %}
+<head>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='dashboard_style.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='new_items_style.css')}}">
+</head>
+
+<main class="container py-5">
+  <center>
+    <h2 class="m-4 text-gradient">New Message</h2>
+  </center>
+  <form id="form" method="POST">
+    <div class="form-group">
+      <textarea style="height: 40vh;" type="text" class="form-control" id="msg_text" name="msg_text" placeholder="Message Text" required></textarea>
+    </div>
+    <center>
+      <div>
+        <button type="submit" class="btn m-3" style="color: white;">Post</button>
+      </div>
+    </center>
+ 
+  </form>
+</main>
+
+{% endblock %}

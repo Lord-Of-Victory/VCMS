@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}
+Virtual Classroom Management System - {{ topic.name}} - Upload
+{% endblock %}
+
+{% block content %}
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='dashboard_style.css')}}">
+</head>
+
+<body>
+    <div class="container container-fluid rounded rounded-3 border border-3" align="center" style="max-height: 70vh;">
+    <h1 class="m-5 text-gradient">Upload To {{ topic.name}}</h1>
+    <form action="{{ url_for('upload', course_id=course_id, topic_id=topic_id) }}" method="POST"
+        enctype="multipart/form-data">
+        <div class="form-group">
+            <label class="m-3" for="file-input">Choose file (image or video):</label>
+            <input type="file" name="file" id="file-input" accept="image/*,video/*" class="form-control-file" required>
+        </div>
+        <div class="form-group m-4">
+            <button type="submit" class="btn btn-primary" id="upload-btn">Upload</button>
+        </div>
+    </form>
+    </div>
+    <script src="{{ url_for('static', filename='uploads_script.js') }}"></script>
+</body>
+
+{% endblock %}

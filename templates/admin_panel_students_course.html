@@ -1,0 +1,9 @@
+{% if courses %}
+{% for course in courses %}
+<li class="list-group-item" style="margin:3px">
+    <a href="{{ url_for('view_course', course_id=course.id) }}">{{ course.name}}</a>
+</li>
+{% endfor %}
+{% else %}
+<p class="m-4"> No Courses </p>
+{% endif %}

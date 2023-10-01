@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block title %}
+Virtual Classroom Management System -Admin Panel
+{% endblock %}
+
+{% block content %}
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='dashboard_style.css')}}">
+</head>
+
+<body>
+    <center>
+        {% with flash_messages=get_flashed_messages() %}
+        {% if flash_messages %}
+        {% for messages in flash_messages %}
+        <div class="alert alert-info m-3" role="alert" style="max-width: 60%;">
+            {{messages}}
+        </div>
+        {%endfor %}
+        {% endif %}
+        {% endwith%}
+    </center>
+
+    <div class="m-4" align="center">
+        <button class="btn btn-primary m-4" onclick="fetch_data_users()">View all users</button>
+        <button class="btn btn-primary m-4" onclick="fetch_data_courses()">View all courses</button>
+        <button class="btn btn-primary m-4" onclick="fetch_data_registration()">register New User</button>
+        <button class="btn btn-primary m-4" onclick="fetch_data_teachers()">View All Teachers</button>
+        <button class="btn btn-primary m-4" onclick="fetch_data_students()">View All Students</button>
+    </div>
+    <div id="all_items"></div>
+</body>
+
+<script>
+
+    function fetch_data_courses() {
+        fetch('{{url_for("admin_panel_courses")}}')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('all_items').innerHTML = data
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }
+    function fetch_data_users() {
+        fetch('{{url_for("admin_panel_users")}}')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('all_items').innerHTML = data
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }
+
+    function fetch_data_teachers() {
+        fetch('{{url_for("admin_panel_teachers")}}')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('all_items').innerHTML = data
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }
+    function fetch_data_students() {
+        fetch('{{url_for("admin_panel_students")}}')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('all_items').innerHTML = data
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }
+    function fetch_data_registration() {
+        fetch('{{url_for("admin_panel_user_registration")}}')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('all_items').innerHTML = data
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }
+    function fetch_user_edit(user_id) {
+        var got_user_id = user_id
+        fetch('/admin_panel/user_edit?user_id=' + user_id)
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('user_object_' + user_id).innerHTML = data
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }
+    function fetch_user_courses(user_id) {
+        var got_user_id = user_id
+        console.log(got_user_id)
+        fetch('/admin_panel/students/courses?user_id=' + user_id)
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById(user_id+"_course_enrollment").innerHTML = data
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }
+    function fetch_user_courses_inst(user_id) {
+        var got_user_id = user_id
+        console.log(got_user_id)
+        fetch('/admin_panel/students/courses_inst?user_id=' + user_id)
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById(user_id+"_course_instructors").innerHTML = data
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }
+
+</script>
+
+{% endblock%}

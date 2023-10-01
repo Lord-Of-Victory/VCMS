@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}
+Virtual Classroom Management System - Dashboard - {{ user.username }}
+{% endblock %}
+
+{% block content %}
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='dashboard_style.css')}}">
+</head>
+
+
+<main class="container py-5">
+    {% with flash_messages=get_flashed_messages() %}
+    {% if flash_messages %}
+    {% for messages in flash_messages %}
+	<div class="alert alert-info" role="alert">
+		{{messages}}
+    </div>
+    {%endfor %}
+	{% endif %}
+    {% endwith%}
+    <div class="row">
+        <div>
+            <h1 style="display:inline-block;margin-bottom: 9px;">Welcome,</h1>
+            <h1 class="text-gradient" style="display:inline-block;margin-bottom: 9px;">{{ user.username }}</h1>
+            <h1 style="display:inline-block;margin-bottom: 9px;">!</h1>
+        </div>
+        <div class="col-md-7 m-1 border border-3 rounded">
+            <h2 class="mt-5">Your Courses</h2>
+            <ul class="list-group my-4  border border-3 rounded" style="max-height: 42vh; overflow-y:auto;" >
+                {% if courses %}
+                {% for course in courses %}
+                <li class="list-group-item" style="margin:3px" >
+                    <a href="{{ url_for('view_course', course_id=course.id) }}">{{ course.name}}</a>
+                </li>
+                {% endfor %}
+                {% else %}
+                <p class="m-4" > No Courses Enrolled </p>
+                {% endif %}
+            </ul>
+                <center>
+                <div style="margin-bottom: 10px;">
+                    <a class="btn btn-primary" href="{{url_for('courses')}}">All Available Courses</a>
+                </div>
+            </center>
+        </div>
+        <div class="col-md-4 m-1 border border-3 rounded">
+            <h2 class="mt-5">Upcoming Assignments</h2>
+            <ul class="list-group my-4" style="max-height: 48vh; overflow-y:auto;">
+
+                {% for course in courses %}
+                {% for assignment in course.assignments %}
+                <li class="list-group-item"><a href="{{url_for('view_assignment',course_id=course.id,assignment_id=assignment.id)}}">{{ assignment.title }} - Due {{ assignment.due_date }}</a></li>
+                {% endfor %}
+                {% if not course %}
+                {% if not course.assignmet %}
+                <li class="list-group-item">No upcoming assignments.</li>
+                {% endif %}
+                {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</main>
+{% endblock %}

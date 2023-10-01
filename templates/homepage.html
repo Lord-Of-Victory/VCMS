@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}
+Virtual Classroom Management System
+{% endblock %}
+
+
+{% block content %}
+<style>
+.btn-success{
+  background-color: #f0834a;
+}
+
+.btn-success:hover{
+  background-color: rgb(45, 192, 5);
+}
+
+</style>
+
+  <!-- Hero Section -->
+  <section class="hero" style="background-color: #94ccff;">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6" style="color: #272e38;">
+          <h1 style="margin: 50px 50px 15px 50px;">Welcome to Virtual Classroom Management</h1>
+          <p style="margin: 5px 50px;">Take your learning to the next level with our state-of-the-art virtual classroom platform. Join our
+            community of learners and educators today!</p>
+          <br>
+          {% if session['user_id'] %}
+          <a href="{{url_for('dashboard')}}" class="btn btn-success" style="margin: 50px 50px 15px 50px;">Dashboard</a>
+          {%else%}
+          <a href="{{url_for('register')}}" class="btn btn-success" style="margin: 50px 50px 15px 50px;">Get Started</a>
+          {%endif%}
+          <br>
+          <br>
+        </div>
+        <div class="col-md-6">
+          <img src="static\home_image.jpg" alt="Virtual Classroom" class="img-fluid">
+        </div>
+      </div>
+    </div>
+  </section>
+  <br>
+  <br>
+  <!-- Features Section -->
+  <section class="features">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="feature-box">
+            <i class="fas fa-chalkboard-teacher"></i>
+            <h3>Expert Instructors</h3>
+            <p>Our courses are taught by experienced and qualified instructors who are passionate about their subjects.
+            </p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="feature-box">
+            <i class="fas fa-laptop"></i>
+            <h3>State-of-the-Art Technology</h3>
+            <p>Our virtual classroom platform utilizes the latest technology to provide a seamless learning.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="feature-box">
+            <i class="fas fa-laptop"></i>
+            <h3>Enhanced Features</h3>
+            <p>Our virtual classroom platform provides enhanced learning features.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock %}

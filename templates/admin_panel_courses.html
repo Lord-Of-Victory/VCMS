@@ -1,0 +1,45 @@
+<main class="container py-5">
+    <div class="row">
+        <div class="col-md">
+            <h2 class="mt-5 text-gradient">All Courses</h2>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            <h5><strong>Course ID</strong></h5>
+                        </th>
+                        <th scope="col">
+                            <h5><strong>Course Name</strong></h5>
+                        </th>
+                        <th scope="col">
+                            <h5><strong>Description</strong></h5>
+                        </th>
+                        <th scope="col">
+                            <h5><strong>Start Date</strong></h5>
+                        </th>
+                        <th scope="col">
+                            <h5><strong>End Date</strong></h5>
+                        </th>
+                        <th scope="col">
+                            <h5><strong>Action</strong></h5>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for course in courses %}
+                    <tr>
+                        <td><strong>{{ course.id }}</strong></td>
+                        <td><strong>{{ course.name }}</strong></td>
+                        <td style=" word-wrap: break-word;">{{ course.description }}</td>
+                        <td>{{ course.start_date.strftime('%Y-%m-%d') }}</td>
+                        <td>{{ course.end_date.strftime('%Y-%m-%d') }}</td>
+                        {% if session['is_admin'] %}
+                        <td><a style="  width: 100%;" class="btn btn-primary" href="{{ url_for('delete',course_id=course.id) }}">Delete</a></td>
+                        {%endif%}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
